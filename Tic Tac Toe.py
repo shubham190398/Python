@@ -1,8 +1,6 @@
-#Initialising variables
+#Importing clear_output
 
 from IPython.display import clear_output
-
-tictactoe = ['#', '-', '-', '-', '-', '-', '-', '-', '-', '-']
 
 #Printing instructions
 def print_instructions():
@@ -138,43 +136,57 @@ def update_game_board(gamelist, position, marker):
     return gamelist
 
 
+#Do you want to play again?
+def replay():
+    
+    return input('Do you want to play again? Enter yes or no.').lower().startswith('y')
+    
+
 #Game Logic
-print_instructions() #First print the instructions
 
-player1_marker, player2_marker = player_marker_input() #Take input for player markers
-
-game_status = True #Checks status of the game
-
-alternate = 1 #To alternate turns
-
-finish_marker = '-' #To decide who is the winner, if any
-
-position = 0 #Initializing the position
-
-print_game(tictactoe) #Print the board initially
-
-while game_status:
+while True:
+    print_instructions() #First print the instructions
     
-    position = player_position_input(tictactoe, alternate) #Take the input position
-    
-    if alternate %2 != 0: #Hence for player 1
-        tictactoe = update_game_board(tictactoe, position, player1_marker)
-    
-    else: #Hence for player 2
-        tictactoe = update_game_board(tictactoe, position, player2_marker)
-    
-    game_status, finish_marker = game_board_status(tictactoe) #Check game status
-    
-    alternate += 1 #Updating turn for next player
+    tictactoe = ['#', '-', '-', '-', '-', '-', '-', '-', '-', '-'] #Initialise the board
 
-if finish_marker == player1_marker:
-    print('\nPlayer 1 has won the game')
+    player1_marker, player2_marker = player_marker_input() #Take input for player markers
 
-elif finish_marker == player2_marker:
-    print('\nPlayer 2 has won the game')
+    game_status = True #Checks status of the game
 
-else:
-    print('\nThe game was tied')
+    alternate = 1 #To alternate turns
+
+    finish_marker = '-' #To decide who is the winner, if any
+
+    position = 0 #Initializing the position
+
+    print_game(tictactoe) #Print the board initially
+
+    while game_status:
+
+        position = player_position_input(tictactoe, alternate) #Take the input position
+
+        if alternate %2 != 0: #Hence for player 1
+            tictactoe = update_game_board(tictactoe, position, player1_marker)
+
+        else: #Hence for player 2
+            tictactoe = update_game_board(tictactoe, position, player2_marker)
+
+        game_status, finish_marker = game_board_status(tictactoe) #Check game status
+
+        alternate += 1 #Updating turn for next player
+
+    if finish_marker == player1_marker:
+        print('\nPlayer 1 has won the game')
+
+    elif finish_marker == player2_marker:
+        print('\nPlayer 2 has won the game')
+
+    else:
+        print('\nThe game was tied')
+        
+    
+    if not replay():
+        break
 
 
 
